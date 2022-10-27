@@ -11,14 +11,8 @@ SET(CMAKE_EXE_LINKER_FLAGS  "${CMAKE_EXE_LINKER_FLAGS} ${GCC_COVERAGE_LINK_FLAGS
 add_executable(${PROJECT_NAME} main.c)
 
 add_subdirectory(threads)
-#include_directories(threads)
-#link_directories(threads)
-
 add_subdirectory(common)
-#include_directories(common)
-#link_directories(common)
 
-
-target_link_libraries(${PROJECT_NAME} PRIVATE shared reader)
+target_link_libraries(${PROJECT_NAME} PRIVATE shared reader ringbuffer)
 
 

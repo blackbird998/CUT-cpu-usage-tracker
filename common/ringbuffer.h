@@ -9,6 +9,7 @@
  * @licence MIT
  */
 #include <inttypes.h>
+#include "shared.h"
 
 /**
  * @file
@@ -62,7 +63,7 @@ typedef struct ring_buffer_t ring_buffer_t;
  */
 struct ring_buffer_t {
   /** Buffer memory. */
-  char buffer[RING_BUFFER_SIZE];
+  struct Stats buffer[RING_BUFFER_SIZE];
   /** Index of tail. */
   ring_buffer_size_t tail_index;
   /** Index of head. */
@@ -81,7 +82,7 @@ void ring_buffer_init(ring_buffer_t *buffer);
  * @param buffer The buffer in which the data should be placed.
  * @param data The byte to place.
  */
-void ring_buffer_queue(ring_buffer_t *buffer, char data);
+void ring_buffer_queue(ring_buffer_t *buffer, struct Stats data);
 
 /**
  * Adds an array of bytes to a ring buffer.
@@ -89,7 +90,7 @@ void ring_buffer_queue(ring_buffer_t *buffer, char data);
  * @param data A pointer to the array of bytes to place in the queue.
  * @param size The size of the array.
  */
-void ring_buffer_queue_arr(ring_buffer_t *buffer, const char *data, ring_buffer_size_t size);
+void ring_buffer_queue_arr(ring_buffer_t *buffer, const struct Stats *data, ring_buffer_size_t size);
 
 /**
  * Returns the oldest byte in a ring buffer.
@@ -97,7 +98,7 @@ void ring_buffer_queue_arr(ring_buffer_t *buffer, const char *data, ring_buffer_
  * @param data A pointer to the location at which the data should be placed.
  * @return 1 if data was returned; 0 otherwise.
  */
-uint8_t ring_buffer_dequeue(ring_buffer_t *buffer, char *data);
+uint8_t ring_buffer_dequeue(ring_buffer_t *buffer, struct Stats *data);
 
 /**
  * Returns the <em>len</em> oldest bytes in a ring buffer.
@@ -106,7 +107,8 @@ uint8_t ring_buffer_dequeue(ring_buffer_t *buffer, char *data);
  * @param len The maximum number of bytes to return.
  * @return The number of bytes returned.
  */
-ring_buffer_size_t ring_buffer_dequeue_arr(ring_buffer_t *buffer, char *data, ring_buffer_size_t len);
+ring_buffer_size_t ring_buffer_dequeue_arr(ring_buffer_t *buffer, struct Stats *data, ring_buffer_size_t len);
+
 /**
  * Peeks a ring buffer, i.e. returns an element without removing it.
  * @param buffer The buffer from which the data should be returned.
@@ -114,7 +116,7 @@ ring_buffer_size_t ring_buffer_dequeue_arr(ring_buffer_t *buffer, char *data, ri
  * @param index The index to peek.
  * @return 1 if data was returned; 0 otherwise.
  */
-uint8_t ring_buffer_peek(ring_buffer_t *buffer, char *data, ring_buffer_size_t index);
+uint8_t ring_buffer_peek(ring_buffer_t *buffer, struct Stats *data, ring_buffer_size_t index);
 
 
 /**
