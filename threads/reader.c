@@ -44,7 +44,7 @@ void readFile(struct Stats* cpuStats){
     if(NULL != filePointer){
         fclose(filePointer);
     }
-    
+    cpuStats[0].cpu_number[3] = 'A'; // A for All to compensate for lack of number
 
     return;
 }
@@ -59,7 +59,7 @@ void readerMain(ring_buffer_t *ring_buffer){
     while(1){
         readFile(cpuStats);
         ring_buffer_queue_arr(ring_buffer, cpuStats, cpuStatsSize);
-        usleep(500000);
+        usleep(900000);
     }
 
 }

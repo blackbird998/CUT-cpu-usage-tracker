@@ -13,6 +13,6 @@ add_executable(${PROJECT_NAME} main.c)
 add_subdirectory(threads)
 add_subdirectory(common)
 
-target_link_libraries(${PROJECT_NAME} PRIVATE shared reader ringbuffer uint_ringbuffer analyzer)
+target_link_libraries(${PROJECT_NAME} PRIVATE shared reader ringbuffer uint_ringbuffer analyzer reader printer)
 
 

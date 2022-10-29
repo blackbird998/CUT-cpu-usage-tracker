@@ -19,7 +19,7 @@ void analyzerMain(struct argStruct* argStruct){
             PrevTotal[n] = PrevIdle[n] + PrevNonIdle[n];
         }
 
-        usleep(500000);
+        usleep(900000);
 
         pthread_mutex_lock(&mutexStats);
             ring_buffer_dequeue_arr(argStruct->ring_buffer_ptr, cpuStats, cpuStatsSize);
