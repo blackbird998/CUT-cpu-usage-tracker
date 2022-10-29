@@ -5,6 +5,7 @@
 
 #include <stdlib.h>
 #include <unistd.h>
+#include <pthread.h>
 //#include "ringbuffer.h"
 
 struct Stats {
@@ -21,7 +22,13 @@ struct Stats {
     __uint64_t guest_nice;   // running a niced guest
 };
 
+struct CPU_Percentage{
+    __uint16_t percentage;
+    char cpu_number[CPU_NAME_SIZE];
+};
 
+pthread_mutex_t mutexStats = PTHREAD_MUTEX_INITIALIZER;
+pthread_mutex_t mutexCPU_Percentage = PTHREAD_MUTEX_INITIALIZER;
 
 __int16_t getCoreNumberPlusOne(){
     return (__int16_t)(sysconf(_SC_NPROCESSORS_ONLN) + 1); // Get number of cpus to monitor

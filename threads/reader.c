@@ -2,16 +2,17 @@
 
 void readFile(struct Stats* cpuStats){
     FILE *filePointer;
+    char temporary_cpu_number[CPU_NAME_SIZE];
+    __uint16_t n = 0;
+
 
     if(NULL == (filePointer = fopen(PATH, "r"))){
         printf("ERROR: File does not exist or it can't be opened!");
         exit(1);
     }
 
-
-    char temporary_cpu_number[CPU_NAME_SIZE];
-    
-    __uint16_t n = 0;
+    n = 0;
+    pthread_mutex_lock(&mutexStats);
     while(1){
         fscanf(filePointer, "%s", temporary_cpu_number);
         if('c' != temporary_cpu_number[0]){
@@ -34,6 +35,7 @@ void readFile(struct Stats* cpuStats){
 
         ++n;
     }
+    pthread_mutex_unlock(&mutexStats);
     //system("cat /proc/stat"); // For debugging
 
     //ring_buffer_queue_arr(&ring_buffer, cpuStats, cpuStatsSize);
@@ -42,6 +44,7 @@ void readFile(struct Stats* cpuStats){
     if(NULL != filePointer){
         fclose(filePointer);
     }
+    
 
     return;
 }
@@ -52,9 +55,12 @@ void readerMain(ring_buffer_t *ring_buffer){
     struct Stats cpuStats[cpuStatsSize]; 
 
     ring_buffer_init(ring_buffer);
-    readFile(cpuStats);
-
-    ring_buffer_queue_arr(ring_buffer, cpuStats, cpuStatsSize);
+    
+    while(1){
+        readFile(cpuStats);
+        ring_buffer_queue_arr(ring_buffer, cpuStats, cpuStatsSize);
+        usleep(500000);
+    }
 
 }
 

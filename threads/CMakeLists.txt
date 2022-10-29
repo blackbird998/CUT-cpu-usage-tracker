@@ -7,7 +7,13 @@ add_library(
     reader.h
     reader.c
 )
+add_library(
+    analyzer SHARED
+    analyzer.h
+    analyzer.c
+)
 
 target_include_directories(reader PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+target_include_directories(analyzer PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 #add_subdirectory(../common ../build/common)
 
