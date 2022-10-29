@@ -1,10 +1,24 @@
+/**
+ * @brief Documentation of Linux /proc file system: https://www.kernel.org/doc/Documentation/filesystems/proc.txt
+ * 
+ */
+
 #ifndef READER_H
 #define READER_H
 
-#include <stdio.h>
-#include <stdlib.h>
-//#include "shared.h"
+#include "shared.h"
+#include "ringbuffer.h"
 
-void readFile();
+#include <stdio.h> // Used for handling file operations
+#include <stdlib.h>
+#include <unistd.h> // Used for _SC_NPROCESSORS_ONLN macro needed to determine number of online cores
+#include <string.h>
+
+#define PATH "/proc/stat"
+
+
+
+void readerMain(ring_buffer_t *ring_buffer);
+void readFile(struct Stats* cpuStats);
 
 #endif

@@ -1,7 +1,19 @@
+target_link_libraries(${PROJECT_NAME} PRIVATE shared ringbuffer)
+#target_include_directories(${PROJECT_NAME} PRIVATE ../common)
+include_directories(BEFORE ../common)
+
 add_library(
     reader SHARED
     reader.h
     reader.c
 )
+add_library(
+    analyzer SHARED
+    analyzer.h
+    analyzer.c
+)
 
 target_include_directories(reader PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+target_include_directories(analyzer PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+#add_subdirectory(../common ../build/common)
+
