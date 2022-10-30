@@ -5,6 +5,7 @@
 #include "reader.h"
 #include "shared.h"
 #include "analyzer.h"
+#include "printer.h"
 #include "ringbuffer.h"
 #include "uint_ringbuffer.h"
 
@@ -21,7 +22,7 @@ int main(void){
 
     pthread_t thread_reader_id;
     pthread_t thread_analyzer_id;
-    //pthread_t thread_printer_id;
+    pthread_t thread_printer_id;
     //pthread_t thread_watchdog_id;
     //pthread_t thread_logger_id;
 
@@ -29,6 +30,8 @@ int main(void){
     pthread_create(&thread_reader_id, NULL, (void*)readerMain, &ring_buffer);
     usleep(50000);
     pthread_create(&thread_analyzer_id, NULL, (void*)analyzerMain, &argStruct);
+    usleep(50000);
+    pthread_create(&thread_printer_id, NULL, (void*)printerMain, &uint_ring_buffer);
     pause();
     return 0;
 }

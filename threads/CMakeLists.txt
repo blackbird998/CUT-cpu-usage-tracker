@@ -12,8 +12,13 @@ add_library(
     analyzer.h
     analyzer.c
 )
+add_library(
+    printer SHARED
+    printer.h
+    printer.c
+)
 
 target_include_directories(reader PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 target_include_directories(analyzer PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
-#add_subdirectory(../common ../build/common)
+target_include_directories(printer PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
