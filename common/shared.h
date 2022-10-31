@@ -6,9 +6,11 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <pthread.h>
-//#include "ringbuffer.h"
+#include <stdbool.h>
+#include <stdatomic.h>
+#include <time.h>
 
-struct Stats {
+struct Stats{
     char cpu_number[CPU_NAME_SIZE];     // cpu number
     __uint64_t user;         // normal processes executing in user mode
     __uint64_t nice;         // niced processes executing in user mode
@@ -33,6 +35,8 @@ pthread_mutex_t mutexCPU_Percentage = PTHREAD_MUTEX_INITIALIZER;
 __int16_t getCoreNumberPlusOne(){
     return (__int16_t)(sysconf(_SC_NPROCESSORS_ONLN) + 1); // Get number of cpus to monitor
 }
+
+
 
 
 

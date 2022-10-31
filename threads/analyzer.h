@@ -8,6 +8,9 @@
 #include <math.h>
 #include <string.h>
 
+atomic_bool terminateAnalyzer;
+atomic_long analyzerTime;
+
 struct argStruct {
     ring_buffer_t* ring_buffer_ptr;
     uint_ring_buffer_t* uint_ring_buffer_ptr;

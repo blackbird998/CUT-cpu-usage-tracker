@@ -17,8 +17,19 @@ add_library(
     printer.h
     printer.c
 )
+add_library(
+    watchdog SHARED
+    watchdog.h
+    watchdog.c
+)
+add_library(
+    logger SHARED
+    logger.h
+    logger.c
+)
 
 target_include_directories(reader PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 target_include_directories(analyzer PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 target_include_directories(printer PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
-
+target_include_directories(watchdog PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+target_include_directories(logger PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})

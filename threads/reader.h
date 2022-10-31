@@ -16,7 +16,8 @@
 
 #define PATH "/proc/stat"
 
-
+atomic_bool terminateReader;
+atomic_long readerTime;
 
 void readerMain(ring_buffer_t *ring_buffer);
 void readFile(struct Stats* cpuStats);
