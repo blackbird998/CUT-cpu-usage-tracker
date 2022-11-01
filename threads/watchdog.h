@@ -21,9 +21,17 @@ struct ThreadID{
     pthread_t thread_logger_id;
 };
 
+struct WatchdogMessages{
+    char message[200];
+    volatile atomic_bool newMessageFlag;
+};
+
 struct ThreadID ThreadID;
+struct WatchdogMessages WatchdogMessages;
 atomic_bool terminateWatchdog;
 
 void watchdogMain(void);
+
+bool sendWatchdogMessage(char* message);
 
 #endif

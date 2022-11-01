@@ -16,8 +16,18 @@
 
 #define PATH "/proc/stat"
 
+bool readerClosed = false;
 atomic_bool terminateReader;
 atomic_long readerTime;
+
+FILE *filePointer;
+
+struct ReaderMessages{
+    char message[200];
+    atomic_bool newMessageFlag;
+};
+
+struct ReaderMessages ReaderMessages;
 
 void readerMain(ring_buffer_t *ring_buffer);
 void readFile(struct Stats* cpuStats);

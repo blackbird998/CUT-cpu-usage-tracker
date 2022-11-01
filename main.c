@@ -8,6 +8,7 @@
 #include "reader.h"
 #include "analyzer.h"
 #include "printer.h"
+#include "logger.h"
 #include "ringbuffer.h"
 #include "uint_ringbuffer.h"
 
@@ -20,7 +21,7 @@ int main(void){
 
     struct sigaction action;
     memset(&action, 0, sizeof(struct sigaction));
-    action.sa_handler = terminate;
+    action.sa_handler = (void*)terminate;
     sigaction(SIGTERM, &action, NULL);
     sigaction(SIGINT, &action, NULL);
 
@@ -28,7 +29,7 @@ int main(void){
     atomic_init(&terminateReader, false);
     atomic_init(&terminateAnalyzer, false);
     atomic_init(&terminatePrinter, false);
-    //atomic_init(&terminateLogger, false);
+    atomic_init(&terminateLogger, false);
     atomic_init(&terminateWatchdog, false);
 
     ring_buffer_t ring_buffer;
@@ -45,6 +46,9 @@ int main(void){
     usleep(50000);
 
     pthread_create(&ThreadID.thread_printer_id, NULL, (void*)printerMain, &uint_ring_buffer);
+    usleep(50000);
+
+    pthread_create(&ThreadID.thread_logger_id, NULL, (void*)loggerMain, NULL);
     usleep(50000);
 
     pthread_create(&ThreadID.thread_watchdog_id, NULL, (void*)watchdogMain, NULL);

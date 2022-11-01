@@ -46,6 +46,6 @@ void analyzerMain(struct argStruct* argStruct){
             uint_ring_buffer_queue_arr(argStruct->uint_ring_buffer_ptr, CPU_Percentage, cpuStatsSize);
         pthread_mutex_unlock(&mutexCPU_Percentage);
     }
-
+    analyzerClosed = true;
     pthread_exit(0);
 }
