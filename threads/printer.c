@@ -6,8 +6,10 @@ void printerMain(uint_ring_buffer_t* uint_ring_buffer){
     struct CPU_Percentage CPU_Percentage[cpuStatsSize];
     printf("\n===printer===\n");
 
-    while(1){
+    while(atomic_load(&terminatePrinter) == false){
+        atomic_store(&printerTime, time(NULL));
         usleep(1000000);
+//        usleep(3000000); // For watchdog DEBUG
         system("clear");
         pthread_mutex_lock(&mutexCPU_Percentage);
             uint_ring_buffer_dequeue_arr(uint_ring_buffer, CPU_Percentage, cpuStatsSize);
@@ -30,4 +32,8 @@ void printerMain(uint_ring_buffer_t* uint_ring_buffer){
             printf("] %d%%\n", CPU_Percentage[n].percentage);
         }
     }
+    pthread_exit(0);
+
+// TODO terminate
+
 }

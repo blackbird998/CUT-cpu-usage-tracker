@@ -56,11 +56,13 @@ void readerMain(ring_buffer_t *ring_buffer){
 
     ring_buffer_init(ring_buffer);
     
-    while(1){
+    while(atomic_load(&terminateReader) == false){
+        atomic_store(&readerTime, time(NULL));
         readFile(cpuStats);
         ring_buffer_queue_arr(ring_buffer, cpuStats, cpuStatsSize);
         usleep(900000);
     }
+    pthread_exit(0);
 
 }
 

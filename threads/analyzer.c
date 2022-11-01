@@ -8,7 +8,9 @@ void analyzerMain(struct argStruct* argStruct){
     struct CPU_Percentage CPU_Percentage[cpuStatsSize];
     //double percentageDouble;
 
-    while(1){
+    while(atomic_load(&terminateAnalyzer) == false){
+        atomic_store(&analyzerTime, time(NULL));
+        
         pthread_mutex_lock(&mutexStats);
             ring_buffer_dequeue_arr(argStruct->ring_buffer_ptr, cpuStats, cpuStatsSize); // TODO - check if empty / returned 0
         pthread_mutex_unlock(&mutexStats);
@@ -38,12 +40,12 @@ void analyzerMain(struct argStruct* argStruct){
                 CPU_Percentage[n].percentage = round(((double)(totald[n] - idled[n])/(double)totald[n])*100);
                 strcpy(CPU_Percentage[n].cpu_number, cpuStats[n].cpu_number);
             }
-            
         }
 
         pthread_mutex_lock(&mutexCPU_Percentage);
             uint_ring_buffer_queue_arr(argStruct->uint_ring_buffer_ptr, CPU_Percentage, cpuStatsSize);
         pthread_mutex_unlock(&mutexCPU_Percentage);
-
     }
+
+    pthread_exit(0);
 }
