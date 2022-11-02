@@ -3,7 +3,6 @@
 
 #include <pthread.h>
 #include <string.h>
-#include <assert.h>
 
 #include "shared.h"
 #include "reader.h"
@@ -21,9 +20,16 @@ struct ThreadID{
     pthread_t thread_logger_id;
 };
 
-struct ThreadID ThreadID;
-atomic_bool terminateWatchdog;
+struct WatchdogMessages{
+    char message[200];
+    volatile atomic_bool newMessageFlag;
+};
+
+extern struct ThreadID ThreadID;
+extern struct WatchdogMessages WatchdogMessages;
+extern atomic_bool terminateWatchdog;
 
 void watchdogMain(void);
+bool sendWatchdogMessage(char* message);
 
 #endif

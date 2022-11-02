@@ -1,13 +1,18 @@
 #include "reader.h"
 
+bool readerClosed = false;
+atomic_bool terminateReader;
+atomic_long readerTime;
+struct ReaderMessages ReaderMessages;
+
+FILE *filePointer;
+
 void readFile(struct Stats* cpuStats){
-    FILE *filePointer;
     char temporary_cpu_number[CPU_NAME_SIZE];
     __uint16_t n = 0;
 
-
-    if(NULL == (filePointer = fopen(PATH, "r"))){
-        printf("ERROR: File does not exist or it can't be opened!");
+    if( (filePointer = fopen(PATH, "r")) == NULL ){
+        printf("ERROR: File does not exist or it can't be opened!\n");
         exit(1);
     }
 
@@ -38,9 +43,6 @@ void readFile(struct Stats* cpuStats){
     pthread_mutex_unlock(&mutexStats);
     //system("cat /proc/stat"); // For debugging
 
-    //ring_buffer_queue_arr(&ring_buffer, cpuStats, cpuStatsSize);
-
-
     if(NULL != filePointer){
         fclose(filePointer);
     }
@@ -62,7 +64,6 @@ void readerMain(ring_buffer_t *ring_buffer){
         ring_buffer_queue_arr(ring_buffer, cpuStats, cpuStatsSize);
         usleep(900000);
     }
+    readerClosed = true;
     pthread_exit(0);
-
 }
-

@@ -1,5 +1,10 @@
 #include "analyzer.h"
 
+bool analyzerClosed = false;
+atomic_bool terminateAnalyzer;
+atomic_long analyzerTime;
+struct AnalyzerMessages AnalyzerMessages;
+
 void analyzerMain(struct argStruct* argStruct){
 
     __int16_t cpuStatsSize = getCoreNumberPlusOne(); // + 1 is for summary of all cpus
@@ -46,6 +51,6 @@ void analyzerMain(struct argStruct* argStruct){
             uint_ring_buffer_queue_arr(argStruct->uint_ring_buffer_ptr, CPU_Percentage, cpuStatsSize);
         pthread_mutex_unlock(&mutexCPU_Percentage);
     }
-
+    analyzerClosed = true;
     pthread_exit(0);
 }

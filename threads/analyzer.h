@@ -8,15 +8,21 @@
 #include <math.h>
 #include <string.h>
 
-atomic_bool terminateAnalyzer;
-atomic_long analyzerTime;
+extern bool analyzerClosed;
+extern atomic_bool terminateAnalyzer;
+extern atomic_long analyzerTime;
 
 struct argStruct {
     ring_buffer_t* ring_buffer_ptr;
     uint_ring_buffer_t* uint_ring_buffer_ptr;
 };
 
+struct AnalyzerMessages{
+    char message[200];
+    atomic_bool newMessageFlag;
+};
 
+extern struct AnalyzerMessages AnalyzerMessages;
 
 void analyzerMain(struct argStruct* argStruct);
 
