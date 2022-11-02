@@ -19,6 +19,6 @@ add_executable(${PROJECT_NAME} main.c main.h)
 add_subdirectory(threads)
 add_subdirectory(common)
 
-target_link_libraries(${PROJECT_NAME} PRIVATE shared reader ringbuffer uint_ringbuffer analyzer printer watchdog logger)
+target_link_libraries(${PROJECT_NAME} PRIVATE reader analyzer printer watchdog logger shared ringbuffer uint_ringbuffer m)
 
 
