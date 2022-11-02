@@ -4,7 +4,6 @@
 #include <pthread.h>
 #include <string.h>
 
-
 #include "shared.h"
 #include "reader.h"
 #include "analyzer.h"
@@ -31,9 +30,6 @@ extern struct WatchdogMessages WatchdogMessages;
 extern atomic_bool terminateWatchdog;
 
 void watchdogMain(void);
-
-
 bool sendWatchdogMessage(char* message);
-
 
 #endif

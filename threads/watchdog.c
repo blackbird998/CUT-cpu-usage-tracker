@@ -12,8 +12,6 @@ void watchdogMain(void){
     time_t loggerTimeTmp;
     char threadName[10];
 
-
-    //atomic_init(WatchdogMessages.message, "\n");
     atomic_init(&WatchdogMessages.newMessageFlag, false);
 
     while(atomic_load(&terminateWatchdog) == false){

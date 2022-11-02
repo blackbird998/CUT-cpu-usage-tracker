@@ -66,6 +66,4 @@ void readerMain(ring_buffer_t *ring_buffer){
     }
     readerClosed = true;
     pthread_exit(0);
-
 }
-

@@ -10,7 +10,6 @@
 #include <stdatomic.h>
 #include <time.h>
 
-//#define NDEBUG
 #include <assert.h>
 
 struct Stats{

@@ -38,5 +38,4 @@ void printerMain(uint_ring_buffer_t* uint_ring_buffer){
     printerClosed = true;
     pthread_exit(0);
 
-
 }

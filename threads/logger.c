@@ -50,7 +50,6 @@ int openLog(void){
 
 void loggerMain(void){
     
-
     char buffer[200];
 
     if(openLog() == 0){
@@ -113,7 +112,6 @@ void loggerMain(void){
         }
     }
 
-    
     loggerClosed = true;
     pthread_exit(0);
 }
