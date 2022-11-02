@@ -12,16 +12,16 @@
 #include "printer.h"
 #include "watchdog.h"
 
-bool loggerClosed;
-atomic_long loggerTime;
-atomic_bool terminateLogger;
+extern bool loggerClosed;
+extern atomic_long loggerTime;
+extern atomic_bool terminateLogger;
 
-FILE* logPointer = NULL;
+extern FILE* logPointer;
 
 #define LOG_PATH_1 "CUT_log1.txt"
 #define LOG_PATH_2 "CUT_log2.txt"
 
-int openLog();
+int openLog(void);
 void loggerMain(void);
 
 #endif

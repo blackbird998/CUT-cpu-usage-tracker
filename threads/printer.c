@@ -1,5 +1,10 @@
 #include "printer.h"
 
+bool printerClosed = false;
+atomic_bool terminatePrinter;
+atomic_long printerTime;
+struct PrinterMessages PrinterMessages;
+
 void printerMain(uint_ring_buffer_t* uint_ring_buffer){
 
     __int16_t cpuStatsSize = getCoreNumberPlusOne(); // + 1 is for summary of all cpus

@@ -1,5 +1,10 @@
 #include "analyzer.h"
 
+bool analyzerClosed = false;
+atomic_bool terminateAnalyzer;
+atomic_long analyzerTime;
+struct AnalyzerMessages AnalyzerMessages;
+
 void analyzerMain(struct argStruct* argStruct){
 
     __int16_t cpuStatsSize = getCoreNumberPlusOne(); // + 1 is for summary of all cpus

@@ -1,5 +1,9 @@
 #include "watchdog.h"
 
+struct ThreadID ThreadID;
+struct WatchdogMessages WatchdogMessages;
+atomic_bool terminateWatchdog;
+
 void watchdogMain(void){
     time_t watchdogTime;
     time_t readerTimeTmp;
@@ -9,7 +13,7 @@ void watchdogMain(void){
     char threadName[10];
 
 
-    atomic_init(WatchdogMessages.message, "\n");
+    //atomic_init(WatchdogMessages.message, "\n");
     atomic_init(&WatchdogMessages.newMessageFlag, false);
 
     while(atomic_load(&terminateWatchdog) == false){
@@ -38,7 +42,6 @@ void watchdogMain(void){
             printf("LOGGER ERROR: Some logs might be missing!\n");
             break;
         }
-
     }
     
     if(atomic_load(&terminateWatchdog) == false){
@@ -46,7 +49,6 @@ void watchdogMain(void){
     }else{
         printf("\nReceived SIGTERM/SIGINT. Canceling threads now...\n");
         sendWatchdogMessage("\tReceived SIGTERM/SIGINT. Canceling threads now...\n");
-        
     }
 
 // Attempt to send signal to threads to exit by themselves
@@ -99,22 +101,7 @@ void watchdogMain(void){
         printf("Logger Thread closed gracefully. This log will be missing in log file.\n");
     }
     
-    //assert(pthread_cancel(ThreadID.thread_logger_id) == 0);
-
-// TODO check if it even works
-    // Make sure that /proc/stat file is closed in case that reader thread was canceled in the middle of reading it. 
-    /*
-    if(NULL != filePointer){
-        fclose(filePointer);
-    }
-    if(NULL != logPointer){
-        fclose(filePointer);
-    }
-    */
-    
     pthread_exit(0);
-
-    return;
 }
 
 bool sendWatchdogMessage(char* message){

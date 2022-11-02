@@ -3,7 +3,7 @@
 
 #include <pthread.h>
 #include <string.h>
-#include <assert.h>
+
 
 #include "shared.h"
 #include "reader.h"
@@ -26,12 +26,14 @@ struct WatchdogMessages{
     volatile atomic_bool newMessageFlag;
 };
 
-struct ThreadID ThreadID;
-struct WatchdogMessages WatchdogMessages;
-atomic_bool terminateWatchdog;
+extern struct ThreadID ThreadID;
+extern struct WatchdogMessages WatchdogMessages;
+extern atomic_bool terminateWatchdog;
 
 void watchdogMain(void);
 
+
 bool sendWatchdogMessage(char* message);
+
 
 #endif

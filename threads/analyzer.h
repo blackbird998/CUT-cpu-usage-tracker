@@ -8,9 +8,9 @@
 #include <math.h>
 #include <string.h>
 
-bool analyzerClosed = false;
-atomic_bool terminateAnalyzer;
-atomic_long analyzerTime;
+extern bool analyzerClosed;
+extern atomic_bool terminateAnalyzer;
+extern atomic_long analyzerTime;
 
 struct argStruct {
     ring_buffer_t* ring_buffer_ptr;
@@ -22,7 +22,7 @@ struct AnalyzerMessages{
     atomic_bool newMessageFlag;
 };
 
-struct AnalyzerMessages AnalyzerMessages;
+extern struct AnalyzerMessages AnalyzerMessages;
 
 void analyzerMain(struct argStruct* argStruct);
 

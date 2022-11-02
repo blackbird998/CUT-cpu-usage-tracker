@@ -10,6 +10,9 @@
 #include <stdatomic.h>
 #include <time.h>
 
+//#define NDEBUG
+#include <assert.h>
+
 struct Stats{
     char cpu_number[CPU_NAME_SIZE];     // cpu number
     __uint64_t user;         // normal processes executing in user mode
@@ -29,15 +32,9 @@ struct CPU_Percentage{
     char cpu_number[CPU_NAME_SIZE];
 };
 
-pthread_mutex_t mutexStats = PTHREAD_MUTEX_INITIALIZER;
-pthread_mutex_t mutexCPU_Percentage = PTHREAD_MUTEX_INITIALIZER;
+extern pthread_mutex_t mutexStats;
+extern pthread_mutex_t mutexCPU_Percentage;
 
-__int16_t getCoreNumberPlusOne(){
-    return (__int16_t)(sysconf(_SC_NPROCESSORS_ONLN) + 1); // Get number of cpus to monitor
-}
-
-
-
-
+__int16_t getCoreNumberPlusOne(void);
 
 #endif

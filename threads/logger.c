@@ -1,6 +1,12 @@
 #include "logger.h"
 
-int openLog(){
+bool loggerClosed = false;
+atomic_long loggerTime;
+atomic_bool terminateLogger;
+
+FILE* logPointer;
+
+int openLog(void){
     struct stat buf;
     stat(LOG_PATH_1, &buf);
     off_t log1Size = buf.st_size; // File size in bytes
@@ -58,7 +64,7 @@ void loggerMain(void){
 
     while(atomic_load(&terminateLogger) == false){
         atomic_store(&loggerTime, time(NULL));
-        usleep(100000); // 100ms
+        usleep(50000); // 50ms
 
         if(atomic_load(&ReaderMessages.newMessageFlag) == true){
             strcpy(buffer, ReaderMessages.message);

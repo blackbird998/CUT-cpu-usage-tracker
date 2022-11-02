@@ -7,16 +7,16 @@
 
 #define PRINT_DIVIDER 1
 
-bool printerClosed = false;
-atomic_bool terminatePrinter;
-atomic_long printerTime;
+extern bool printerClosed;
+extern atomic_bool terminatePrinter;
+extern atomic_long printerTime;
 
 struct PrinterMessages{
     char message[200];
     atomic_bool newMessageFlag;
 };
 
-struct PrinterMessages PrinterMessages;
+extern struct PrinterMessages PrinterMessages;
 
 void printerMain(uint_ring_buffer_t* uint_ring_buffer);
 

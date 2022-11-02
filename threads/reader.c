@@ -1,5 +1,12 @@
 #include "reader.h"
 
+bool readerClosed = false;
+atomic_bool terminateReader;
+atomic_long readerTime;
+struct ReaderMessages ReaderMessages;
+
+FILE *filePointer;
+
 void readFile(struct Stats* cpuStats){
     char temporary_cpu_number[CPU_NAME_SIZE];
     __uint16_t n = 0;
@@ -35,9 +42,6 @@ void readFile(struct Stats* cpuStats){
     }
     pthread_mutex_unlock(&mutexStats);
     //system("cat /proc/stat"); // For debugging
-
-    //ring_buffer_queue_arr(&ring_buffer, cpuStats, cpuStatsSize);
-
 
     if(NULL != filePointer){
         fclose(filePointer);
